@@ -3,6 +3,7 @@ package com.example.rest_playground.controller;
 import com.example.rest_playground.model.Exercise;
 import com.example.rest_playground.service.ExerciseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,14 +15,24 @@ public class ExerciseController {
     public final ExerciseService exerciseService;
 
     @Autowired
-    public ExerciseController(ExerciseService exerciseService) {
+    public ExerciseController(@Qualifier("exerciseServiceForDB") ExerciseService exerciseService) {
         this.exerciseService = exerciseService;
     }
 
+//    @PostMapping("/exercises")
+//    public ResponseEntity<?> create(@RequestBody Exercise exercise) {
+//        exerciseService.create(exercise);
+//        return exercise != null
+//                ? new ResponseEntity<>(HttpStatus.CREATED)
+//                : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//    }
+
     @PostMapping("/exercises")
-    public ResponseEntity<?> create(@RequestBody Exercise exercise) {
-        exerciseService.create(exercise);
-        return exercise != null
+    public ResponseEntity<?> create(@RequestBody List <Exercise> exercises) {
+        for (Exercise ex : exercises) {
+            exerciseService.create(ex);
+        }
+        return exercises != null && !exercises.isEmpty()
                 ? new ResponseEntity<>(HttpStatus.CREATED)
                 : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
