@@ -28,11 +28,21 @@ public class ClientController {
         return "HEllow HEllowHEllowHEllowHEllow!@";
     }
 
-    @PostMapping("/clients")
-    public ResponseEntity<?> create(@RequestBody Client client) {
-        clientService.create(client);
-        return new ResponseEntity<>(HttpStatus.CREATED);
-    }
+     @PostMapping("/clients")
+     public ResponseEntity<?> create(@RequestBody Client client) {
+         clientService.create(client);
+         return new ResponseEntity<>(HttpStatus.CREATED);
+     }
+
+//    @PostMapping("/clients")
+//    public ResponseEntity<?> createMany(@RequestBody List <Client> clients) {
+//        for (Client c : clients) {
+//            clientService.create(c);
+//        }
+//        return clients != null && !clients.isEmpty()
+//                ? new ResponseEntity<>(HttpStatus.CREATED)
+//                : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//    }
 
     @GetMapping("/clients")
     public ResponseEntity<List<Client>> read() {

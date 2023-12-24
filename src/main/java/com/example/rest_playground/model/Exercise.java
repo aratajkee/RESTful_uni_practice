@@ -19,5 +19,4 @@ public class Exercise {
     private String equipment;
     @Column(name = "exercise_repetitions")
     private Integer repetitions;
-
 }
